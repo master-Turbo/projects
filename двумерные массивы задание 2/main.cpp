@@ -48,29 +48,58 @@ int main ()
     bool places [ROW][COL] = {{false, false, false,},
                               {false, false, false,},
                               {false, false, false}};
-
+    int userXvictories = 0;
+    int userOvictories = 0;
     int move = 0;
+    int x = 0;
+    int y= 0;
     char player = 'X';
+
     while (move <= 8)
     {
+        std::cout << "---------------------------------------------" << std::endl;
         std::cout << "Welcome to the game of tic tac toe" << std::endl;
+        std::cout << std::endl;
+        std::cout << "User X victories: " << userXvictories << std::endl;
+        std::cout << "User O victories: " << userOvictories << std::endl;
+        std::cout << std::endl;
         std::cout << "Player " << player << " move now." << std::endl;
         std::cout << std::endl;
+        std::cin >> x >> y;
+
+        goingOutOfBounds(x, y);
+        placeFree(places, x, y);
+
+
+
+        field[x][y] = player;
+        
         for (int i = 0; i < ROW; i++)
         {
+            std::cout << "\t";
             for (int j = 0; j < COL; j++)
             {
-                std::cout << field [i][j] << " " << "|" << std::endl;
+                if (j == 2) std::cout << " "<< field [i][j] << "  ";
+                else std::cout << " "<< field [i][j] << " " << "|";
             }
             
             std::cout << std::endl;
-            std::cout << "-----------" << std::endl;
-            
+            std::cout << "\t";
+            if (i != 2) std::cout << "-----------" << std::endl;
         }
-        
-    }
-    
+        if (player == 'X') player = 'O'; 
+        else player = 'X';
 
+
+        move--;
+        std::cout << std::endl;
+        std::cout << "---------------------------------------------" << std::endl;
+
+    }
+        
+    
+    return 0;
+}
     
     
     
@@ -87,10 +116,3 @@ int main ()
     //     проверка на ничью
     //     вывод состояния поля на экран
     //     замена Х на О
-
-
-    // rules
-
-
-    
-}

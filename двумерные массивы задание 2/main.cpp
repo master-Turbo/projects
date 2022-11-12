@@ -1,44 +1,112 @@
-/*
-Крестики-нолики
-Что нужно сделать
-Старая добрая игра на страницах всех школьных тетрадей. Поле размером 3 × 3 представлено в виде двумерного массива с 
-типом элементов char. Участвуют два игрока, они ходят по очереди и ставят в указанные ими в стандартном вводе координаты 
-свой символ — X или O (буквы латинского алфавита). Как только у одного из игроков будет установлено подряд три крестика 
-или три нолика, он побеждает. Если свободных клеток не осталось, а трёх совпадающих элементов не найдено, то объявляется 
-ничья. Для простоты не будем рассматривать диагональные совпадения — только строго вертикальные и строго горизонтальные.
-
-Изначально всё поле инициализируется символом пробела — ‘ ‘(для обозначения пробела кавычки одинарные и в одну сторону). 
-Это можно сделать сразу при объявлении либо с помощью вложенного цикла. На каждом ходе при занятой клетке или при неверных 
-координатах этой клетки должно быть выведено сообщение, и игрок должен указать координаты клетки повторно. После каждого 
-хода надо выводить в консоль текущее состояние всего игрового поля для наглядности.
-
-Советы и рекомендации
-Действия для обоих игроков одинаковые, отличаются только символом, который ставится на поле.
-Игровой цикл не должен быть бесконечным. Игра имеет определённое максимальное количество шагов.
-Не забывайте про случай ничьей.
-Как и в предыдущем задании, здесь будет удобно сразу заполнить массив значениями false. Количество мест, доступных для 
-заполнения, заранее известно. В процессе заполнения из этой переменой нужно не забывать вычитать единицу. Чтобы отметить
-место как занятое, нужно лишь написать places[i][j] = true;.
-Проверку на победу игрока, которую надо осуществлять после каждого хода, можно сделать с помощью вложенного цикла, сразу 
-проверяя и вертикаль, и горизонталь, а как именно — попробуйте догадаться сами.
-Здесь заранее известно число ходов — 3 * 3. Столько раз должен быть выполнен цикл, который спрашивает у очередного игрока 
-координаты. Символ, который будет установлен в указанных координатах, можно на каждом шаге менять подобным образом:
-if (gamer_name == 'X') 
-                gamer_name = 'O'; 
-else 
-                gamer_name = 'X';
-
-Что оценивается
-Корректный ход игры, соответствующий правилам.
-Правильный (желательно красивый) вывод игрового поля.
-Понятный игроку интерфейс.
-
-*/
-
 #include <iostream>
+
+//Получение данных от пользователя
+int getting_data_from_the_user (int a)
+{
+    std::cin >> a;
+    return a;
+}
+
+// проверка на выход из диапазона игрового поля
+bool going_out_of_bounds (int x, int y)
+{
+    if ((x < 0 || x > 2) && (y < 0 || y > 2))
+    {
+        return true;
+    }
+    else return false;
+}
+
+// проверка на занятость выбрнной ячейки игрового поля
+bool place_free (bool arr[][3], int x, int y)
+{
+    if (arr[x][y] == true)
+    {
+        return true;
+    }
+    else return false;
+}
+
+// проверка на победу
+bool check_for_victory(char arr[][3], char player)
+{
+    if((arr [0][0] == player && arr [0][1] == player && arr [0][2] == player) ||
+       (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
+       (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
+       (arr [0][0] == player && arr [1][0] == player && arr [2][0] == player) ||
+       (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
+       (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
+       (arr [0][0] == player && arr [1][1] == player && arr [2][2] == player) ||
+       (arr [0][2] == player && arr [2][1] == player && arr [2][0] == player))
+    {
+        return true;
+    }
+    else return false;
+}
+
+// проверка на ничью
+bool checking_for_a_draw(char arr[][3], char player)
+{
+    if((arr [0][0] == player && arr [0][1] == player && arr [0][2] == player) ||
+       (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
+       (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
+       (arr [0][0] == player && arr [1][0] == player && arr [2][0] == player) ||
+       (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
+       (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
+       (arr [0][0] == player && arr [1][1] == player && arr [2][2] == player) ||
+       (arr [0][2] == player && arr [2][1] == player && arr [2][0] == player))
+    {
+        return true;
+    }
+    else return false;
+}
+
+// вывод игрового поля
+void output_of_the_playing_field(char arr [][3], int r, int c)
+{
+    for (int i = 0; i < r; i++)
+    {
+        std::cout << "\t";
+        for (int j = 0; j < c; j++)
+        {
+            if (j == 2) std::cout << " "<< arr [i][j] << "  ";
+            else std::cout << " "<< arr [i][j] << " " << "|";
+        }
+            
+        std::cout << std::endl;
+        std::cout << "\t";
+        if (i != 2) std::cout << "-----------" << std::endl;
+    }
+}
+
+// смена игрока
+char players_turn(char player)
+{
+    if (player == 'X') player = 'O'; 
+    else player = 'X';
+    return player;
+}
+
+// обнулить исходные данные
+void reset_data(char field [][3], bool places [][3], int r, inr c, int *move, int *x, int *y, char *player)
+{
+    for(int i = 0; i < r; i ++)
+    {
+        for(int j = 0; j < c; j ++)
+        {
+            field[i][j] = ' ';
+            places[i][j] = false;
+        }
+    }
+    move = 0;
+    x = 0;
+    y = 0;
+    player = 'X';
+}
 
 int main ()
 {
+    //исходные данные
     const int ROW = 3;
     const int COL = 3;
     char field [ROW][COL] = {{' ', ' ', ' '},
@@ -48,71 +116,56 @@ int main ()
     bool places [ROW][COL] = {{false, false, false,},
                               {false, false, false,},
                               {false, false, false}};
-    int userXvictories = 0;
-    int userOvictories = 0;
+    int user_X_victories = 0;
+    int user_O_victories = 0;
     int move = 0;
-    int x = 0;
-    int y= 0;
+    int x_point = 0;
+    int y_point = 0;
     char player = 'X';
 
+    //главный цикл
     while (move <= 8)
     {
         std::cout << "---------------------------------------------" << std::endl;
         std::cout << "Welcome to the game of tic tac toe" << std::endl;
         std::cout << std::endl;
-        std::cout << "User X victories: " << userXvictories << std::endl;
-        std::cout << "User O victories: " << userOvictories << std::endl;
+        std::cout << "User X victories: " << user_X_victories << std::endl;
+        std::cout << "User O victories: " << user_O_victories << std::endl;
         std::cout << std::endl;
         std::cout << "Player " << player << " move now." << std::endl;
         std::cout << std::endl;
-        std::cin >> x >> y;
 
-        goingOutOfBounds(x, y);
-        placeFree(places, x, y);
-
-
-
-        field[x][y] = player;
-        
-        for (int i = 0; i < ROW; i++)
+        x_point = getting_data_from_the_user(x_point);
+        y_point = getting_data_from_the_user(y_point);
+        while(going_out_of_bounds(x_point, y_point) == true)
         {
-            std::cout << "\t";
-            for (int j = 0; j < COL; j++)
-            {
-                if (j == 2) std::cout << " "<< field [i][j] << "  ";
-                else std::cout << " "<< field [i][j] << " " << "|";
-            }
-            
-            std::cout << std::endl;
-            std::cout << "\t";
-            if (i != 2) std::cout << "-----------" << std::endl;
+            std::cout << "The coordinates are entered incorrectly, repeat the input" << std::endl;
+            std::cin >> x_point >> y_point;
+            going_out_of_bounds(x_point, y_point);
         }
-        if (player == 'X') player = 'O'; 
-        else player = 'X';
-
-
-        move--;
+        while (place_free(places, x_point, y_point) == true)
+        {
+            std::cout << "This place is occupied, repeat the input" << std::endl;
+            std::cin >> x_point >> y_point;
+            place_free(places, x_point, y_point);
+        }
+        places[x_point][y_point] = true;
+        field[x_point][y_point] = player;
+        if(check_for_victory(field, player) == true)
+        {
+            std::cout << "Player " << player << " WIN!" << std::endl;
+            if(player == 'X') user_X_victories ++;
+            if(player == 'O') user_O_victories ++;
+            reset_data(field, places, ROW, COL, move, x_point, y_point, player);
+        }
+        checking_for_a_draw(field, player);
+        output_of_the_playing_field(field, ROW, COL);
+        player = players_turn(player);
+        move ++;
         std::cout << std::endl;
         std::cout << "---------------------------------------------" << std::endl;
-
     }
         
     
     return 0;
 }
-    
-    
-    
-    
-    // цикл пока ходы не кончились или не найден победитель или нет ничьи
-    //     первым ходит игрок Х
-    //     игрок вводит координаты
-    //     проверка на выход за пределы поля
-    //     если вышел то сообщение об этом и просьба о необходимости повторить ввод
-    //     проверка на занятость клетки
-    //     если клетка занята то сообщение об этом и просьба повторить ввод
-    //     если координаты не заняты игрок записывает по этим координатам свой символ
-    //     проверка на победу 
-    //     проверка на ничью
-    //     вывод состояния поля на экран
-    //     замена Х на О

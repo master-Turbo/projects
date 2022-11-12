@@ -98,10 +98,10 @@ void reset_data(char field [][3], bool places [][3], int r, inr c, int *move, in
             places[i][j] = false;
         }
     }
-    move = 0;
-    x = 0;
-    y = 0;
-    player = 'X';
+    *move = 0;
+    *x = 0;
+    *y = 0;
+    *player = 'X';
 }
 
 int main ()
@@ -113,8 +113,8 @@ int main ()
                              {' ', ' ', ' '},
                              {' ', ' ', ' '}};
     
-    bool places [ROW][COL] = {{false, false, false,},
-                              {false, false, false,},
+    bool places [ROW][COL] = {{false, false, false},
+                              {false, false, false},
                               {false, false, false}};
     int user_X_victories = 0;
     int user_O_victories = 0;
@@ -156,9 +156,13 @@ int main ()
             std::cout << "Player " << player << " WIN!" << std::endl;
             if(player == 'X') user_X_victories ++;
             if(player == 'O') user_O_victories ++;
-            reset_data(field, places, ROW, COL, move, x_point, y_point, player);
+            reset_data(field, places, ROW, COL, &move, &x_point, &y_point, &player);
         }
-        checking_for_a_draw(field, player);
+        if(checking_for_a_draw(field, places, ROW, COL, &move, &x_point, &y_point, &player))
+        {
+            std::cout << "You have a draw!" << std::endl;
+            reset_data(field, places, ROW, COL, &move, &x_point, &y_point, &player);
+        }
         output_of_the_playing_field(field, ROW, COL);
         player = players_turn(player);
         move ++;

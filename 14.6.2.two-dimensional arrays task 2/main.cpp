@@ -10,7 +10,7 @@ int getting_data_from_the_user (int a)
 // проверка на выход из диапазона игрового поля
 bool going_out_of_bounds (int x, int y)
 {
-    if ((x < 0 || x > 2) && (y < 0 || y > 2))
+    if ((x < 0 || x > 2) || (y < 0 || y > 2))
     {
         return true;
     }
@@ -88,7 +88,7 @@ char players_turn(char player)
 }
 
 // обнулить исходные данные
-void reset_data(char field [][3], bool places [][3], int r, inr c, int *move, int *x, int *y, char *player)
+void reset_data(char field [][3], bool places [][3], int r, int c, int *move, int *x, int *y, char *player)
 {
     for(int i = 0; i < r; i ++)
     {
@@ -124,7 +124,7 @@ int main ()
     char player = 'X';
 
     //главный цикл
-    while (move <= 8)
+    while (move <= 8 )
     {
         std::cout << "---------------------------------------------" << std::endl;
         std::cout << "Welcome to the game of tic tac toe" << std::endl;
@@ -151,25 +151,35 @@ int main ()
         }
         places[x_point][y_point] = true;
         field[x_point][y_point] = player;
+
         if(check_for_victory(field, player) == true)
         {
             std::cout << "Player " << player << " WIN!" << std::endl;
             if(player == 'X') user_X_victories ++;
             if(player == 'O') user_O_victories ++;
+            output_of_the_playing_field(field, ROW, COL);
             reset_data(field, places, ROW, COL, &move, &x_point, &y_point, &player);
         }
-        if(checking_for_a_draw(field, places, ROW, COL, &move, &x_point, &y_point, &player))
+        else if(checking_for_a_draw(field, player) == true)
         {
             std::cout << "You have a draw!" << std::endl;
+            output_of_the_playing_field(field, ROW, COL);
             reset_data(field, places, ROW, COL, &move, &x_point, &y_point, &player);
         }
-        output_of_the_playing_field(field, ROW, COL);
-        player = players_turn(player);
-        move ++;
-        std::cout << std::endl;
-        std::cout << "---------------------------------------------" << std::endl;
+        else 
+        {
+            output_of_the_playing_field(field, ROW, COL);
+            player = players_turn(player);
+            move ++;
+            std::cout << std::endl;
+            std::cout << "---------------------------------------------" << std::endl;
+        }
+
+        
     }
         
     
     return 0;
-}
+}//проверка на победу _ 
+//вывод на экран игрового поля
+//

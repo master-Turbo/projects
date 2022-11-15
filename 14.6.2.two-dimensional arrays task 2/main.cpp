@@ -4,7 +4,7 @@
 int getting_data_from_the_user (int a)
 {
     std::cin >> a;
-    return a;
+    areturn ;
 }
 
 // проверка на выход из диапазона игрового поля

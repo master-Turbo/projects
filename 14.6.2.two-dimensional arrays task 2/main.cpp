@@ -4,7 +4,7 @@
 int getting_data_from_the_user (int a)
 {
     std::cin >> a;
-    areturn ;
+    return a;
 }
 
 // проверка на выход из диапазона игрового поля
@@ -44,22 +44,22 @@ bool check_for_victory(char arr[][3], char player)
     else return false;
 }
 
-// проверка на ничью
-bool checking_for_a_draw(char arr[][3], char player)
-{
-    if((arr [0][0] == player && arr [0][1] == player && arr [0][2] == player) ||
-       (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
-       (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
-       (arr [0][0] == player && arr [1][0] == player && arr [2][0] == player) ||
-       (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
-       (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
-       (arr [0][0] == player && arr [1][1] == player && arr [2][2] == player) ||
-       (arr [0][2] == player && arr [2][1] == player && arr [2][0] == player))
-    {
-        return true;
-    }
-    else return false;
-}
+// проверка на ничью | 
+// bool checking_for_a_draw(char arr[][3], char player)
+// {
+//     if((arr [0][0] == player && arr [0][1] == player && arr [0][2] == player) ||
+//        (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
+//        (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
+//        (arr [0][0] == player && arr [1][0] == player && arr [2][0] == player) ||
+//        (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
+//        (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
+//        (arr [0][0] == player && arr [1][1] == player && arr [2][2] == player) ||
+//        (arr [0][2] == player && arr [2][1] == player && arr [2][0] == player))
+//     {
+//         return true;
+//     }
+//     else return false;
+// }
 
 // вывод игрового поля
 void output_of_the_playing_field(char arr [][3], int r, int c)
@@ -104,6 +104,8 @@ void reset_data(char field [][3], bool places [][3], int r, int c, int *move, in
     *player = 'X';
 }
 
+// exit
+
 int main ()
 {
     //исходные данные
@@ -122,9 +124,11 @@ int main ()
     int x_point = 0;
     int y_point = 0;
     char player = 'X';
+    bool exit = false;
 
     //главный цикл
-    while (move <= 8 )
+    
+    while (exit == false)
     {
         std::cout << "---------------------------------------------" << std::endl;
         std::cout << "Welcome to the game of tic tac toe" << std::endl;
@@ -134,6 +138,8 @@ int main ()
         std::cout << std::endl;
         std::cout << "Player " << player << " move now." << std::endl;
         std::cout << std::endl;
+        
+        // exit?
 
         x_point = getting_data_from_the_user(x_point);
         y_point = getting_data_from_the_user(y_point);
@@ -160,7 +166,7 @@ int main ()
             output_of_the_playing_field(field, ROW, COL);
             reset_data(field, places, ROW, COL, &move, &x_point, &y_point, &player);
         }
-        else if(checking_for_a_draw(field, player) == true)
+        else if(move == 9)
         {
             std::cout << "You have a draw!" << std::endl;
             output_of_the_playing_field(field, ROW, COL);

@@ -1,8 +1,9 @@
 #include <iostream>
 
 //Получение данных от пользователя
-int getting_data_from_the_user (int a)
+int getting_data_from_the_user ()
 {
+    int a;
     std::cin >> a;
     return a;
 }
@@ -138,23 +139,37 @@ int main ()
         std::cout << std::endl;
         std::cout << "Player " << player << " move now." << std::endl;
         std::cout << std::endl;
+        std::cout << "Enter the coordinates ROW and COLUMN" << std::endl;
+        std::cout << "To end the game, enter -1 " << std::endl;
         
         // exit?
+        if (getting_data_from_the_user() == -1)
+        {
+            std::cout << "End Game!" << std::endl;
+            exit = true;
+            break;
+            // return 0;
+        }
+        else
+        {
+            x_point = getting_data_from_the_user();
+            y_point = getting_data_from_the_user();
+        }
 
-        x_point = getting_data_from_the_user(x_point);
-        y_point = getting_data_from_the_user(y_point);
         while(going_out_of_bounds(x_point, y_point) == true)
         {
             std::cout << "The coordinates are entered incorrectly, repeat the input" << std::endl;
             std::cin >> x_point >> y_point;
             going_out_of_bounds(x_point, y_point);
         }
+
         while (place_free(places, x_point, y_point) == true)
         {
             std::cout << "This place is occupied, repeat the input" << std::endl;
             std::cin >> x_point >> y_point;
             place_free(places, x_point, y_point);
         }
+
         places[x_point][y_point] = true;
         field[x_point][y_point] = player;
 
@@ -180,8 +195,6 @@ int main ()
             std::cout << std::endl;
             std::cout << "---------------------------------------------" << std::endl;
         }
-
-        
     }        
     
     return 0;

@@ -45,22 +45,6 @@ bool check_for_victory(char arr[][3], char player)
     else return false;
 }
 
-// проверка на ничью | 
-// bool checking_for_a_draw(char arr[][3], char player)
-// {
-//     if((arr [0][0] == player && arr [0][1] == player && arr [0][2] == player) ||
-//        (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
-//        (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
-//        (arr [0][0] == player && arr [1][0] == player && arr [2][0] == player) ||
-//        (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
-//        (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
-//        (arr [0][0] == player && arr [1][1] == player && arr [2][2] == player) ||
-//        (arr [0][2] == player && arr [2][1] == player && arr [2][0] == player))
-//     {
-//         return true;
-//     }
-//     else return false;
-// }
 
 // вывод игрового поля
 void output_of_the_playing_field(char arr [][3], int r, int c)

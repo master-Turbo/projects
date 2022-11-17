@@ -72,24 +72,6 @@ char players_turn(char player)
     return player;
 }
 
-// обнулить исходные данные
-void reset_data(char field [][3], bool places [][3], int r, int c, int *move, int *x, int *y, char *player)
-{
-    for(int i = 0; i < r; i ++)
-    {
-        for(int j = 0; j < c; j ++)
-        {
-            field[i][j] = ' ';
-            places[i][j] = false;
-        }
-    }
-    *move = 0;
-    *x = 0;
-    *y = 0;
-    *player = 'X';
-}
-
-// exit
 
 int main ()
 {
@@ -103,42 +85,26 @@ int main ()
     bool places [ROW][COL] = {{false, false, false},
                               {false, false, false},
                               {false, false, false}};
-    int user_X_victories = 0;
-    int user_O_victories = 0;
+
     int move = 0;
     int x_point = 0;
     int y_point = 0;
     char player = 'X';
     bool exit = false;
 
+    std::cout << "Welcome to the game of tic tac toe" << std::endl;
+    std::cout << std::endl;
     //главный цикл
     
     while (exit == false)
     {
         std::cout << "---------------------------------------------" << std::endl;
-        std::cout << "Welcome to the game of tic tac toe" << std::endl;
-        std::cout << std::endl;
-        std::cout << "User X victories: " << user_X_victories << std::endl;
-        std::cout << "User O victories: " << user_O_victories << std::endl;
-        std::cout << std::endl;
         std::cout << "Player " << player << " move now." << std::endl;
         std::cout << std::endl;
-        std::cout << "Enter the coordinates ROW and COLUMN" << std::endl;
-        std::cout << "To end the game, enter -1 " << std::endl;
+        std::cout << "Enter the coordinates ROW and COLUMN" << std::endl;        
         
-        // exit?
-        if (getting_data_from_the_user() == -1)
-        {
-            std::cout << "End Game!" << std::endl;
-            exit = true;
-            break;
-            // return 0;
-        }
-        else
-        {
-            x_point = getting_data_from_the_user();
-            y_point = getting_data_from_the_user();
-        }
+        x_point = getting_data_from_the_user();
+        y_point = getting_data_from_the_user();
 
         while(going_out_of_bounds(x_point, y_point) == true)
         {
@@ -160,16 +126,14 @@ int main ()
         if(check_for_victory(field, player) == true)
         {
             std::cout << "Player " << player << " WIN!" << std::endl;
-            if(player == 'X') user_X_victories ++;
-            if(player == 'O') user_O_victories ++;
             output_of_the_playing_field(field, ROW, COL);
-            reset_data(field, places, ROW, COL, &move, &x_point, &y_point, &player);
+            exit = true;
         }
         else if(move == 9)
         {
             std::cout << "You have a draw!" << std::endl;
             output_of_the_playing_field(field, ROW, COL);
-            reset_data(field, places, ROW, COL, &move, &x_point, &y_point, &player);
+            exit = true;
         }
         else 
         {

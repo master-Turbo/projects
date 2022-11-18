@@ -38,7 +38,7 @@ bool check_for_victory(char arr[][3], char player)
        (arr [1][0] == player && arr [1][1] == player && arr [1][2] == player) ||
        (arr [2][0] == player && arr [2][1] == player && arr [2][2] == player) ||
        (arr [0][0] == player && arr [1][1] == player && arr [2][2] == player) ||
-       (arr [0][2] == player && arr [2][1] == player && arr [2][0] == player))
+       (arr [0][2] == player && arr [1][1] == player && arr [2][0] == player))
     {
         return true;
     }
@@ -82,9 +82,7 @@ int main ()
                              {' ', ' ', ' '},
                              {' ', ' ', ' '}};
     
-    bool places [ROW][COL] = {{false, false, false},
-                              {false, false, false},
-                              {false, false, false}};
+    bool places [ROW][COL] = {false};
 
     int move = 0;
     int x_point = 0;
@@ -129,7 +127,7 @@ int main ()
             output_of_the_playing_field(field, ROW, COL);
             exit = true;
         }
-        else if(move == 9)
+        else if(move == 8)
         {
             std::cout << "You have a draw!" << std::endl;
             output_of_the_playing_field(field, ROW, COL);

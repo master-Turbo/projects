@@ -12,6 +12,7 @@ int main()
     float temp = 0.0f;
 
     // заполнить массив
+    cout << "Fill in the array " << endl;
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -21,29 +22,17 @@ int main()
         
     }
     cout << endl;
-    
-    // вывести массив
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            cout << matrix [i][j] << "\t";
-        }
-        cout << endl;
-    }
-    
     cout << endl;
     
     // заполнить вектор
+    cout << "Fill in the vector " << endl;
     for (int i = 0; i < 4; i++)
     {
         cin >> temp;
         vec.push_back(temp);
     }
     cout << endl;
-
-    // вывести вектор
-    for (int i = 0; i < 4; i++) cout << vec[i] << "\t";
+    cout << endl;
     cout << endl;
 
     //вычисления 
@@ -57,11 +46,10 @@ int main()
         result_vec.push_back(tmp);
         tmp = 0.0f;
     }
-
-
-    cout << endl;
     
     // вывести новый вектор
+    cout << "Result " << endl;
+
     for (int i = 0; i < 4; i++) cout << result_vec[i] << "\t";
     cout << endl;
 

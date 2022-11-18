@@ -17,6 +17,7 @@ bool comparison (int A[][4], int B[][4])
         }
         
     }
+    return true;
 }
 
 void transformation(int arr[][4])

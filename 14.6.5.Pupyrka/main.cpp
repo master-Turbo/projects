@@ -2,7 +2,7 @@
 
 using namespace std;
 // вывод в консоль
-bool bubble_wrap (int *count, bool arr[][12])
+void bubble_wrap (int *count, bool arr[][12])
 {
     int pop_count = 0;
     for (int i = 0; i < 12; i++)

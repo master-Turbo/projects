@@ -69,14 +69,27 @@ bool going_out_of_bounds(int *x1, int *y1, int *x2, int *y2)
 // раздавить пупырку
 void remove_bubbles (bool arr[][12], int *x1, int *y1, int *x2, int *y2)
 {
-
-    for (int i = *x1; i <= *x2; i++)
+    if (*x1 > *x2 && *y1 > *y2)
     {
-        for (int j = *y1; j <= *y2; j++)
+        for (int i = *x2; i <= *x1; i++)
         {
-            arr[i][j] = false;
-        } 
+            for (int j = *y2; j <= *y1; j++)
+            {
+                arr[i][j] = false;
+            } 
+        }
     }
+    else
+    {
+        for (int i = *x1; i <= *x2; i++)
+        {
+            for (int j = *y1; j <= *y2; j++)
+            {
+                arr[i][j] = false;
+            } 
+        }
+    }
+
 }
 
 

@@ -120,7 +120,7 @@ int main()
         cout << endl;
         cout << endl;
 
-        if (count == 0)
+        if (count <= 0)
         {
             return 0;
         }

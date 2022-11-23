@@ -1,19 +1,68 @@
 #include <iostream>
-
+#include <climits>
 using namespace std;
+ 
+// Функция для печати непрерывного подмассива с наибольшей суммой
+// в заданном наборе целых чисел
+void kadane(int arr[], int n)
+{
+    // базовый вариант
+    if (n <= 0) {
+        return;
+    }
+ 
+    // сохраняет максимальный суммарный подмассив, найденный на данный момент
+    int max_so_far = INT_MIN;
+ 
+    // сохраняет максимальную сумму подмассива, заканчивающегося на текущей позиции
+    int max_ending_here = 0;
+ 
+    // сохраняет конечные точки найденного до сих пор подмассива максимальной суммы
+    int start = 0, end = 0;
+ 
+    // сохраняет начальный индекс последовательности с положительной суммой
+    int beg = 0;
+ 
+    // обход заданного массива
+    for (int i = 0; i < n; i++)
+    {
+        // обновить максимальную сумму подмассива, "заканчивающегося" на индексе `i`
+        max_ending_here = max_ending_here + arr[i];
+ 
+        // если максимальная сумма станет меньше текущего элемента,
+        // начинаем с текущего элемента
+        if (max_ending_here < arr[i])
+        {
+            max_ending_here = arr[i];
+            beg = i;
+        }
+ 
+        // обновляем результат, если текущая сумма подмассива больше
+        if (max_so_far < max_ending_here)
+        {
+            max_so_far = max_ending_here;
+            start = beg;
+            end = i;
+        }
+    }
 
+
+ 
+    cout << "The contiguous subarray with the largest sum is "<< endl;
+    for (int i = start; i <= end; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    cout << "Start index " << start << ", End index " << end << endl;
+    cout << endl;
+}
+ 
 int main()
 {
-    int sum = 0;
-    int a[] = {-2,1,-3,4,-1,2,1,-5,4};
-
-     for (int i = 0; i < 9; i++)
-     {
-        for (int j = 0; j < 9; j++)
-        {
-            sum = a[i] + a [i+x];
-        }
-        
-     }
-     
+    int arr[] = {-2,1,-3,4,-1,2,1,-5,4};
+    int n = sizeof(arr)/sizeof(arr[0]);
+ 
+    kadane(arr, n);
+ 
+    return 0;
 }

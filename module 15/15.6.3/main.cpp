@@ -27,7 +27,11 @@ int main()
         cin >> input;
         // cout << " ";
 
-        if (input != -1) arr.push_back(input);
+        if (input != -1 && arr.size() < 5) arr.push_back(input);
+        if (input != -1 && arr.size() >= 5)
+        {
+            if (input < arr[4]) arr.push_back(input);
+        }
         
         if (input == -1)
         {
@@ -38,6 +42,7 @@ int main()
             else
             {
                 insertionSort(arr, arr.size());
+                while(arr.size() > 5) arr.pop_back();
                 cout<<endl;
                 cout << "Output: " << arr[4] <<" (In sorted form , the array looks like this: {";
                 for (int i = 0; i < arr.size(); i++) cout << arr[i] << " ";

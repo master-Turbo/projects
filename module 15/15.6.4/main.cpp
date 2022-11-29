@@ -24,7 +24,7 @@ int main()
     int r = min + 1;
     while(l > -1 && r < 7)
     {
-        if ((arr[l] * -1 < arr[r]))
+        if ((arr[l] * -1) < arr[r])
         {
             cout << arr[l] << " ";
             --l;

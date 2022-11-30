@@ -4,7 +4,7 @@
 using namespace std;
 int main()
 {
-    char speed_str [4] = {' '};
+    char speed_str [8] = {};
     float speed_value = 0;
     float change_speed = 0;
 

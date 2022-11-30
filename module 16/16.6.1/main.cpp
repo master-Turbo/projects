@@ -1,7 +1,7 @@
 #include<iostream>
-#include<sstream>
 #include<string>
 using namespace std;
+
 int main()
 {
     char speed_str [8] = {};

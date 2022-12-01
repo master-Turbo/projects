@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     string buffer;
-    cin << buffer;
+    cin >> buffer;
     double a = 0;
     double b = 0;
     char operation;

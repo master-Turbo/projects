@@ -5,12 +5,17 @@ using namespace std;
 
 int main()
 {
-    string input;
+    string the_whole_part;
+    string fractional_part;
 
     cout << "Input number: ";
-    cin >> input;
-    
-    double output = stod(input);
+    cin >> the_whole_part;
+    cin >> fractional_part;
+
+    string out = the_whole_part + '.' + fractional_part;
+
+    double output = stod(out);
+
     cout << endl;
     cout << output;
 

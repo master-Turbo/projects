@@ -15,21 +15,40 @@ int main()
     stringstream buffer_stream(buffer);
     buffer_stream >> a >> operation >> b;
 
-    if (operation == '+')
+    // if (operation == '+')
+    // {
+    //     cout << "a + b = " << a + b << endl;
+    // }
+    //     if (operation == '-')
+    // {
+    //     cout << "a - b = " << a - b << endl;
+    // }
+    //     if (operation == '*')
+    // {
+    //     cout << "a * b = " << a * b << endl;
+    // }
+    //     if (operation == '/')
+    // {
+    //     cout << "a / b = " << a / b << endl;
+    // }
+
+    switch (operation)
     {
+    case '+':
         cout << "a + b = " << a + b << endl;
-    }
-        if (operation == '-')
-    {
+        break;
+    case '-':
         cout << "a - b = " << a - b << endl;
-    }
-        if (operation == '*')
-    {
+        break;        
+    case '*':
         cout << "a * b = " << a * b << endl;
-    }
-        if (operation == '/')
-    {
+        break;
+    case '/':
         cout << "a / b = " << a / b << endl;
+        break;
+        
+    default:
+        break;
     }
 
     

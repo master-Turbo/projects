@@ -17,19 +17,19 @@ int main()
 
     if (operation == '+')
     {
-        cout << a + b;
+        cout << "a + b = " << a + b << endl;
     }
         if (operation == '-')
     {
-        cout << a - b;
+        cout << "a - b = " << a - b << endl;
     }
         if (operation == '*')
     {
-        cout << a * b;
+        cout << "a * b = " << a * b << endl;
     }
         if (operation == '/')
     {
-        cout << a / b;
+        cout << "a / b = " << a / b << endl;
     }
 
     

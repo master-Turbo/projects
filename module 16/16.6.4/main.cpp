@@ -23,48 +23,48 @@ int main()
     
     for (int i = 0; i < 12; ++i)
     {
-        char buffer [4];
+        char buffer [3];
         sprintf(buffer, "%d",melody[i]);
-        std::cout << "buffer: " << buffer << std::endl;
+        // std::cout << "buffer: " << buffer << std::endl;
         
 
 
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 3; ++i)
         {
             int temp;
             temp = buffer[i] - '0';
 
-            // 1 << temp;????
 
-            if (notes & DO)
+            if ((1 << temp-1) & DO)
                 {
-                    std::cout << "DO"; 
+                    std::cout << "DO "; 
                 }
-            if (notes & RE) 
+            if ((1 << temp-1) & RE) 
                 { 
-                    std::cout << "RE"; 
+                    std::cout << "RE "; 
                 }
-            if (notes & MI) 
+            if ((1 << temp-1) & MI) 
                 { 
-                    std::cout << "NI"; 
+                    std::cout << "MI "; 
                 }
-            if (notes & FA) 
+            if ((1 << temp-1) & FA) 
                 { 
-                    std::cout << "FA"; 
+                    std::cout << "FA "; 
                 }
-            if (notes & SOL) 
+            if ((1 << temp-1) & SOL) 
                 { 
-                    std::cout << "SOL"; 
+                    std::cout << "SOL "; 
                 }
-            if (notes & LA) 
+            if ((1 << temp-1) & LA) 
                 { 
-                    std::cout << "LA"; 
+                    std::cout << "LA "; 
                 }
-            if (notes & SI) 
+            if ((1 << temp-1) & SI) 
                 { 
-                    std::cout << "SI"; 
+                    std::cout << "SI "; 
                 }
         }
+        cout << endl;
 
     }
     

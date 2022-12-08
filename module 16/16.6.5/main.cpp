@@ -64,8 +64,8 @@ int main()
         bool switches_outside_temperature_state;
         bool switches_inside_temperature_state;
         bool switches_movement_outside_state;
-        bool switches_the_inside_light;
-        bool switches_the_outside_light;
+        bool switches_the_inside_light_state;
+        bool switches_the_outside_light_state;
 
 
         // условия
@@ -122,12 +122,12 @@ int main()
         if ((time > 16 && time < 5 && movement_outside == "yes") || 
             (time > 16 && time < 5 && movement_outside == "no"))
         {
-            (switches_the_outside_light = true) |= LIGHTS_OUTSIDE;
+            (switches_the_outside_light_state = true) |= LIGHTS_OUTSIDE;
             cout << "| LIGHTS OUTSIDE on                                  |"<< endl;
         } 
         else 
         {
-            (switches_the_outside_light = false) &= ~LIGHTS_OUTSIDE;
+            (switches_the_outside_light_state = false) &= ~LIGHTS_OUTSIDE;
             cout << "| LIGHTS OUTSIDE off                                 |"<< endl;
         }
         // Всё освещение в доме также умное и поддерживает настройку цветовой температуры 
@@ -138,7 +138,7 @@ int main()
 
         if (the_inside_light == "on")
         {
-            (switches_the_inside_light = true) |= LIGHTS_INSIDE;
+            (switches_the_inside_light_state = true) |= LIGHTS_INSIDE;
             cout << "| LIGHT INSIDE on                                    |" << endl;
 
             if (time >= 16 && time < 17) cout << "| LIGHTS INSIDE color temperature: 5000K             |" << endl;
@@ -149,8 +149,8 @@ int main()
         }
         if (the_inside_light == "off")
         {
-            (switches_the_inside_light = false) &= ~LIGHTS_INSIDE;
-            cout << "| INSIDE_LIGHT off                                   |" << endl;
+            (switches_the_inside_light_state = false) &= ~LIGHTS_INSIDE;
+            cout << "| INSIDE LIGHT off                                   |" << endl;
         }
         
         ++time;

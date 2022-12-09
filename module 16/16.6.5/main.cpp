@@ -23,6 +23,16 @@ int main()
     string the_inside_light;
     string input_data;
 
+    int state =0;
+
+    cout << "+====================================================+" << endl;
+    cout << "| LIGHTS INSIDE      off                             |" << endl;
+    cout << "| LIGHTS OUTSIDE     off                             |" << endl;
+    cout << "| HEATERS            off                             |" << endl;
+    cout << "| WATER PIPE HEATING off                             |" << endl;
+    cout << "| CONDITIONER        off                             |" << endl;
+    cout << "+====================================================+" << endl;
+
     // Каждый час пользователь сообщает состояние всех основных датчиков и света 
     //      (температура снаружи, температура внутри, есть ли движение снаружи, включён ли свет в доме).
     // Данные параметры вводятся разом в одну строку через пробел, 
@@ -30,22 +40,32 @@ int main()
     // Информация о движении выводится в формате yes/no.
     // Включение и отключение света происходит с помощью on/off.
 
-    while (day != 2 && time != 23)
+    while (day != 3)
     {
-        if (time < 23 && day == 1)
+        if (time <= 23)
         {
+            if (time < 10)
+            {
+                cout << "+====================================================+" << endl;
+                cout << "| Time 0" << time << ":00                                         |"<< endl;
+                cout << "|                                                    |"<< endl;
+            }
+            else
+            {
+                cout << "+====================================================+" << endl;
+                cout << "| Time " << time << ":00                                         |"<< endl;
+                cout << "|                                                    |"<< endl;
+            }
+        }
+        else
+        {
+            time = 0;
             cout << "+====================================================+" << endl;
             cout << "| Time 0" << time << ":00                                         |"<< endl;
             cout << "|                                                    |"<< endl;
+            ++day;
         }
-        if (time > 23 ) 
-        {
-            day = 2;
-            time = 0;
-            cout << "|                                                    |"<< endl;
-            cout << "| Time 0" << time << ":00                                         |"<< endl;
-            cout << "|                                                    |"<< endl;
-        }
+
         
         cout << "| Enter the status of the sensors via the space sign:|" << endl;
         cout << "| outside temperature          (🌡 C)                 |" << endl;
@@ -61,58 +81,34 @@ int main()
         stringstream temp_stream(input_data);
         temp_stream >> outside_temperature >> inside_temperature >> movement_outside >> the_inside_light;
 
-        bool switches_outside_temperature_state;
-        bool switches_inside_temperature_state;
-        bool switches_movement_outside_state;
-        bool switches_the_inside_light_state;
-        bool switches_the_outside_light_state;
-
-
         // условия
-        // Как только температура снаружи падает ниже 0 °С, 
-        //      надо включить систему обогрева водопровода. 
-        // Если температура снаружи поднялась выше 5 °С, 
-        //      то систему обогрева водопровода нужно отключить.
 
-        if (outside_temperature < 0)
-        {
-             (switches_outside_temperature_state = true) |= WATER_PIPE_HEATING;
-             cout << "| WATER PIPE HEATING on                              |" << endl;
-        }
-        if (outside_temperature > 5)
-        {
-            (switches_outside_temperature_state = false) &= ~WATER_PIPE_HEATING;
-             cout << "| WATER PIPE HEATING off                             |" << endl;
-        }
+        // Всё освещение в доме умное и поддерживает настройку цветовой температуры 
+        //      для комфортного нахождения. Каждый день начиная с 16:00 и до 20:00 температура 
+        //      цвета должна плавно изменяться с 5000K до 2700К. 
+        // Разумеется, это изменение должно происходить, если свет сейчас включён. 
+        // В 00:00 температура сбрасывается до 5000К.
 
-        // Если температура в помещении упала ниже 22 °С, 
-        //      должно включиться отопление. 
-        // Как только температура равна или поднимается выше 25 °С, 
-        //      отопление автоматически отключается.
-
-        if (inside_temperature < 22)
+        if (the_inside_light == "on")
         {
-            (switches_inside_temperature_state = true) |= HEATERS;
-            cout << "| HEATERS on                                         |" << endl;
+            if (!(state & LIGHTS_INSIDE))
+            {
+                state |= LIGHTS_INSIDE;
+                cout << "| LIGHT INSIDE on                                    |" << endl;
+                if ((time >= 16 && time < 17) ||
+                    (time >= 0  && time < 16)) cout << "| LIGHT INSIDE color temperature: 5000K              |" << endl;
+                if (time >= 17 && time < 18) cout << "| LIGHT INSIDE color temperature: 4300K             |" << endl;
+                if (time >= 18 && time < 19) cout << "| LIGHT INSIDE color temperature: 3400K             |" << endl;
+                if (time >= 19 && time < 20) cout << "| LIGHT INSIDE color temperature: 2700K             |" << endl;
+            }
         }
-        if (inside_temperature > 25)
+        if (the_inside_light == "off")
         {
-            (switches_inside_temperature_state = false) &= ~HEATERS;
-            cout << "| HEATERS off                                        |" << endl;
-        }
-
-        // Если температура в помещении поднялась до 30 °С, включается кондиционер. 
-        // Как только температура становится 25 °С, кондиционер отключается.
-
-        if (inside_temperature >= 30)
-        {
-            (switches_inside_temperature_state = true) |= CONDITIONER;
-            cout << "| CONDITIONER on                                     |" << endl;
-        }
-        if (inside_temperature == 25)
-        {
-            (switches_inside_temperature_state = false) &= ~CONDITIONER;
-            cout << "| CONDITIONER off                                    |" << endl;
+            if (state & LIGHTS_INSIDE)
+            {
+                state &= ~LIGHTS_INSIDE;
+                cout << "| INSIDE LIGHT off                                   |" << endl;
+            }
         }
 
         // Если на дворе вечер (время больше 16:00 и меньше 5:00 утра) и 
@@ -122,37 +118,85 @@ int main()
         if ((time > 16 && time < 5 && movement_outside == "yes") || 
             (time > 16 && time < 5 && movement_outside == "no"))
         {
-            (switches_the_outside_light_state = true) |= LIGHTS_OUTSIDE;
-            cout << "| LIGHTS OUTSIDE on                                  |"<< endl;
-        } 
-        else 
-        {
-            (switches_the_outside_light_state = false) &= ~LIGHTS_OUTSIDE;
-            cout << "| LIGHTS OUTSIDE off                                 |"<< endl;
+            if (!(state & LIGHTS_OUTSIDE))
+            {
+                state |= LIGHTS_OUTSIDE;
+                cout << "| LIGHTS OUTSIDE on                                  |"<< endl;
+            }
         }
-        // Всё освещение в доме также умное и поддерживает настройку цветовой температуры 
-        //      для комфортного нахождения. Каждый день начиная с 16:00 и до 20:00 температура 
-        //      цвета должна плавно изменяться с 5000K до 2700К. 
-        // Разумеется, это изменение должно происходить, если свет сейчас включён. 
-        // В 00:00 температура сбрасывается до 5000К.
+        else
+        {
+            if (state & LIGHTS_OUTSIDE)
+            {
+                state &= ~LIGHTS_OUTSIDE;
+                cout << "| LIGHTS OUTSIDE off                                 |"<< endl;
+            }
+        }
 
-        if (the_inside_light == "on")
-        {
-            (switches_the_inside_light_state = true) |= LIGHTS_INSIDE;
-            cout << "| LIGHT INSIDE on                                    |" << endl;
+        // Если температура в помещении упала ниже 22 °С, 
+        //      должно включиться отопление. 
+        // Как только температура равна или поднимается выше 25 °С, 
+        //      отопление автоматически отключается.
 
-            if (time >= 16 && time < 17) cout << "| LIGHTS INSIDE color temperature: 5000K             |" << endl;
-            if (time >= 17 && time < 18) cout << "| LIGHTS INSIDE color temperature: 4300K             |" << endl;
-            if (time >= 18 && time < 19) cout << "| LIGHTS INSIDE color temperature: 3400K             |" << endl;
-            if (time >= 19 && time < 20) cout << "| LIGHTS INSIDE color temperature: 2700K             |" << endl;
-            if (time == 00) cout << "| LIGHTS INSIDE color temperature: 5000K             |" << endl;
-        }
-        if (the_inside_light == "off")
+        if (inside_temperature < 22)
         {
-            (switches_the_inside_light_state = false) &= ~LIGHTS_INSIDE;
-            cout << "| INSIDE LIGHT off                                   |" << endl;
+            if (!(state & HEATERS))
+            {
+                state |= HEATERS;
+                cout << "| HEATERS on                                         |" << endl;
+            }
         }
-        
+        if (inside_temperature > 25)
+        {
+            if (state & HEATERS)
+            {
+                state &= ~HEATERS;
+                cout << "| HEATERS off                                        |" << endl;
+            }
+        }
+
+        // Как только температура снаружи падает ниже 0 °С, 
+        //      надо включить систему обогрева водопровода. 
+        // Если температура снаружи поднялась выше 5 °С, 
+        //      то систему обогрева водопровода нужно отключить.
+
+        if (outside_temperature < 0)
+        {
+            if (!(state & WATER_PIPE_HEATING))
+            {
+                state |= WATER_PIPE_HEATING;
+                cout << "| WATER PIPE HEATING on                              |" << endl;
+            }
+        }
+        if (outside_temperature > 5)
+        {
+            if (state & WATER_PIPE_HEATING)
+            {
+                state &= ~WATER_PIPE_HEATING;
+                cout << "| WATER PIPE HEATING off                             |" << endl;
+            }
+        }
+
+        // Если температура в помещении поднялась до 30 °С, включается кондиционер. 
+        // Как только температура становится 25 °С, кондиционер отключается.
+
+        if (inside_temperature >= 30)
+        {
+            if (!(state & CONDITIONER))
+            {
+                state |= CONDITIONER;
+                cout << "| CONDITIONER on                                     |" << endl;
+            }
+        }
+        if (inside_temperature <= 25)
+        {
+            if (state & CONDITIONER)
+            {
+                state &= ~CONDITIONER;
+                cout << "| CONDITIONER off                                    |" << endl;
+            }
+        }
+
         ++time;
 
         cout << "+====================================================+" << endl;

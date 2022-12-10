@@ -115,8 +115,8 @@ int main()
         //      снаружи есть какое-то движение, то необходимо включить садовое освещение. 
         // Если движения нет или время не вечернее, то света снаружи быть не должно.
 
-        if ((time > 16 && time < 5 && movement_outside == "yes") || 
-            (time > 16 && time < 5 && movement_outside == "no"))
+        if (((time >= 16 && time <=24) || (time >= 0 && time < 5) && movement_outside == "yes") || 
+            ((time >=  16 && time <=24) || (time >= 0 && time < 5) && movement_outside == "no"))
         {
             if (!(state & LIGHTS_OUTSIDE))
             {

@@ -17,10 +17,10 @@ bool substring ( const char* a, const char* b)
                     if (*(a + i + k) == *(b + j + k)) flag = true;
                     else flag = false;
                 }
+                if (flag) return true;
             }
         }
 
-        if (flag) return true;
     }
 
     return false;

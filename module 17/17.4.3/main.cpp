@@ -1,31 +1,36 @@
 #include<iostream>
-#include<string>
+#include<cstring>
 
 using namespace std;
 
-bool substring (char* a, char* b)
+bool substring ( const char* a, const char* b)
 {
     bool flag = false;
-    int i = 0;
-    while (*(a + i) != '\0')
+    for (int i = 0; *(a + i) != '\0'; ++i)
     {
-        if (*(b) == *(a + i)) flag = true;
-        
-        if (flag)
+        for (int j = 0; *(b + j) != '\0'; ++j)
         {
-            if (*(b + 1) == *(a + i + 1) && *(b + 2) == *(a + i + 2)) return true;
-            else flag = false;
+            if (*(a + i) == *(b + j))
+            {
+                for (int k = 0; *(b + k); ++k)
+                {
+                    if (*(a + i + k) == *(b + j + k)) flag = true;
+                    else flag = false;
+                }
+            }
         }
-        ++i;
+
+        if (flag) return true;
     }
+
     return false;
 }
 
 int main()
 {
-    char* a = "Hello world";
-    char* b = "wor";
-    char* c = "banana";
+    const char* a = "Hello world";
+    const char* b = "wor";
+    const char* c = "banana";
 
     if (substring(a, b)) cout << "true" <<" ";
     else cout << "false" <<" ";
@@ -34,4 +39,4 @@ int main()
     else cout << "false" <<" ";
     
     return 0;
-}
+}   

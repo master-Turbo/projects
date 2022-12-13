@@ -3,11 +3,36 @@
 
 using namespace std;
 
-bool substring ( const char* a, const char* b)
+bool size_check(const char* a, const char* b)
 {
-    if (strstr(a, b)) return true;
-    else return false;
+    if (strlen(a) < strlen(b)) return false;
+    return true;
 }
+
+bool substring ( const char* a, const char* b)
+{   
+    size_check(a, b);
+    bool flag = false;
+    for (int i = 0; *(a + i) != '\0'; ++i)
+    {
+        if (*(a + i) == *(b))// ищем первое вхождение
+        {
+            flag = true;
+            for (int j = 1; *(b + j) != '\0'; ++j)
+            {
+                if (*(a + i + j) != *(b + j))
+                {
+                    flag = false;
+                    break;
+                }    
+            }
+            if (flag) return true;
+        }
+    }
+
+    return false;
+}
+
 
 int main()
 {

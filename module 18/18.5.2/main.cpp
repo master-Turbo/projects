@@ -7,8 +7,9 @@ int counting_ways(int n)
     if (n <= 1)
     {
         return 1;
-        return counting_ways(n - 1) + counting_ways(n - 2) + counting_ways(n -3);
     }
+    
+    return counting_ways(n - 1) + counting_ways(n - 2) + counting_ways(n -3) ;
 }
 
 int main()

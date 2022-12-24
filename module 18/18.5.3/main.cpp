@@ -1,4 +1,6 @@
 #include <iostream>
+#include<sstream>
+#include<string>
 
 using namespace std;
 
@@ -18,12 +20,23 @@ int counting_ways(int n, int k)
 
 int main()
 {
-    int n, k;
-    cout << "To which step should the rabbit jump?" << endl;
-    cin >> n;
-    cout << "Specify the maximum jump" << endl;
-    cin >> k;
+    int n = 0;
+    int k = 0;
+    string str;
 
+    cout << "To which step should the rabbit jump? (enter via spacebar)" << endl;
+    cout << "Specify the maximum jump (>=1)" << endl;
+    getline(cin, str);
+
+    stringstream temp (str);
+    temp >> n >> k;
+
+    if (k == 0)
+    {
+        k = 3;
+        cout << "Maximum jamp == 3 " << endl;
+    }
     cout << "Number of ways = " << counting_ways(n, k);
+    cout << endl;
     return 0;
 }

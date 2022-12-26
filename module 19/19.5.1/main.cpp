@@ -5,14 +5,14 @@ using namespace std;
 
 int main()
 {
-    // cout << "==============================" << endl;
-    // cout << "word search program" << endl;
-    // cout << "what word are you looking for?" << endl;
+    cout << "==============================" << endl;
+    cout << "word search program" << endl;
+    cout << "what word are you looking for?" << endl;
     // cout << "only ASCII" << endl;
-    // cout << "==============================" << endl;
+    cout << "==============================" << endl;
 
-    // string find_string;
-    // getline(cin,find_string);
+    string find_string;
+    getline(cin,find_string);
     bool is_find = false;
     ifstream words;
     words.open("module 19/19.5.1/words.txt");
@@ -21,7 +21,7 @@ int main()
     {
         words >> str;
         // cout << str << endl;
-        if (str == "wood")
+        if (str == find_string)
         {
             // cout << "we found the right word" <<endl;
             // cout << "==============================" << endl;

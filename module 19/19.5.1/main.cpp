@@ -5,36 +5,36 @@ using namespace std;
 
 int main()
 {
-    cout << "==============================" << endl;
-    cout << "word search program" << endl;
-    cout << "what word are you looking for?" << endl;
-    cout << "only ASCII" << endl;
-    cout << "==============================" << endl;
+    // cout << "==============================" << endl;
+    // cout << "word search program" << endl;
+    // cout << "what word are you looking for?" << endl;
+    // cout << "only ASCII" << endl;
+    // cout << "==============================" << endl;
 
-    string find_string;
-    getline(cin,find_string);
-
+    // string find_string;
+    // getline(cin,find_string);
+    bool is_find = false;
     ifstream words;
     words.open("module 19/19.5.1/words.txt");
     string str;
     while (!words.eof())
     {
         words >> str;
-
-        if (str == find_string)
+        // cout << str << endl;
+        if (str == "wood")
         {
-            cout << "we found the right word" <<endl;
-            cout << "==============================" << endl;
-            cout << str;
+            // cout << "we found the right word" <<endl;
+            // cout << "==============================" << endl;
+            cout << str << endl;
+            is_find = true;
             break;
         }
-        else
-        {
-            cout << "this word is not in our dictionary" << endl;
-            break;
-        }
-        
     }
+    if (!is_find)
+    {
+        cout << "this word is not in our dictionary" << endl;
+    }
+    
     words.close();
     return 0;
 }

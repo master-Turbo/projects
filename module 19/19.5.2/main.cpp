@@ -18,15 +18,15 @@ int main()
     ifstream file;
     file.open(path, ios::binary);
     char buffer[512];
-    buffer[511] = 0;
+    // buffer[511] = 0;
+    
     if(file.is_open())
     {
-        file.read(buffer, sizeof (buffer) -1);
-        int gcount = file.gcount();
-        cout << buffer << endl;
+        file.read(buffer, sizeof (buffer));
+        for (int i = 0; i < file.gcount(); ++i) cout << buffer[i];
+        cout << endl;
         for (int i = 0; i < file.gcount(); ++i) buffer[i] = 0;
         
-
         while (!file.eof())
         {
             cout << "================================================" << endl;
@@ -40,8 +40,9 @@ int main()
             switch (action)
             {
             case actions::next:
-                file.read(buffer, sizeof (buffer) -1);
-                cout << buffer << endl;
+                file.read(buffer, sizeof (buffer));
+                for (int i = 0; i < file.gcount(); ++i) cout << buffer[i];
+                cout << endl;
                 for (int i = 0; i < file.gcount(); ++i) buffer[i] = 0;
                 break;
                 

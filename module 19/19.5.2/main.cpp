@@ -5,9 +5,8 @@ using namespace std;
 
 enum actions
 {
-    up = 1,
-    down = 2,
-    quit = 4
+    next = 1,
+    quit = 2
 };
 
 int main()
@@ -18,21 +17,21 @@ int main()
     getline(cin,path);
     ifstream file;
     file.open(path, ios::binary);
-    char buffer[64];
-    buffer[64] = 0;
+    char buffer[512];
+    buffer[511] = 0;
     if(file.is_open())
     {
-        file.read(buffer, sizeof (buffer));
+        file.read(buffer, sizeof (buffer) -1);
+        int gcount = file.gcount();
         cout << buffer << endl;
-        cout << "================================================" << endl;
-        cout << file.tellg() << " " << file.gcount() << endl;
-        cout << "================================================" << endl;
+        for (int i = 0; i < file.gcount(); ++i) buffer[i] = 0;
         
+
         while (!file.eof())
         {
-            cout << "scroll up == 1" << endl;
-            cout << "scroll down == 2" << endl;
-            cout << "quit == 4" << endl;
+            cout << "================================================" << endl;
+            cout << "next page == 1" << endl;
+            cout << "quit == 2" << endl;
 
             int action;
             cin >> action;
@@ -40,23 +39,10 @@ int main()
 
             switch (action)
             {
-            case actions::up:
-                file.seekg(file.gcount(), ios::cur);//????? не перемещается назад
-                for (int i = 0; i < sizeof(buffer); ++i) buffer[i] = 0;
-                file.read(buffer, sizeof (buffer));
+            case actions::next:
+                file.read(buffer, sizeof (buffer) -1);
                 cout << buffer << endl;
-                cout << "================================================" << endl;
-                cout << file.tellg() << " " << file.gcount() << endl;
-                cout << "================================================" << endl;
-                break;
-                
-            case actions::down:
-                for (int i = 0; i < sizeof(buffer); ++i) buffer[i] = 0;
-                file.read(buffer, sizeof (buffer));
-                cout << buffer << endl;
-                cout << "================================================" << endl;
-                cout << file.tellg() << " " << file.gcount() << endl;
-                cout << "================================================" << endl;
+                for (int i = 0; i < file.gcount(); ++i) buffer[i] = 0;
                 break;
                 
             case actions::quit:

@@ -9,6 +9,15 @@ enum actions
     quit = 2
 };
 
+void read(char (&buffer)[512], ifstream& file)
+{
+    file.read(buffer, sizeof (buffer));
+    for (int i = 0; i < file.gcount(); ++i) cout << buffer[i];
+    cout << endl;
+    for (int i = 0; i < file.gcount(); ++i) buffer[i] = 0;
+
+}
+
 int main()
 {
     cout << "input file path" << endl;
@@ -22,11 +31,8 @@ int main()
     
     if(file.is_open())
     {
-        file.read(buffer, sizeof (buffer));
-        for (int i = 0; i < file.gcount(); ++i) cout << buffer[i];
-        cout << endl;
-        for (int i = 0; i < file.gcount(); ++i) buffer[i] = 0;
-        
+        read(buffer, file);
+
         while (!file.eof())
         {
             cout << "================================================" << endl;
@@ -40,10 +46,7 @@ int main()
             switch (action)
             {
             case actions::next:
-                file.read(buffer, sizeof (buffer));
-                for (int i = 0; i < file.gcount(); ++i) cout << buffer[i];
-                cout << endl;
-                for (int i = 0; i < file.gcount(); ++i) buffer[i] = 0;
+                read(buffer, file);
                 break;
                 
             case actions::quit:

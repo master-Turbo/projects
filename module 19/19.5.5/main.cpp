@@ -4,104 +4,142 @@
 
 using namespace std;
 
-int main()
+void display_title()
 {
-    bool sector [13] = {false};
-    string path_question [13] = {"module 19/19.5.5/sector1question.txt",
-                                 "module 19/19.5.5/sector2question.txt",
-                                 "module 19/19.5.5/sector3question.txt",
-                                 "module 19/19.5.5/sector4question.txt",
-                                 "module 19/19.5.5/sector5question.txt",
-                                 "module 19/19.5.5/sector6question.txt",
-                                 "module 19/19.5.5/sector7question.txt",
-                                 "module 19/19.5.5/sector8question.txt",
-                                 "module 19/19.5.5/sector9question.txt",
-                                 "module 19/19.5.5/sector10question.txt",
-                                 "module 19/19.5.5/sector11question.txt",
-                                 "module 19/19.5.5/sector12question.txt",
-                                 "module 19/19.5.5/sector13question.txt"};
-    string path_answer [13] = {"module 19/19.5.5/sector1answer.txt",
-                               "module 19/19.5.5/sector2answer.txt",
-                               "module 19/19.5.5/sector3answer.txt",
-                               "module 19/19.5.5/sector4answer.txt",
-                               "module 19/19.5.5/sector5answer.txt",
-                               "module 19/19.5.5/sector6answer.txt",
-                               "module 19/19.5.5/sector7answer.txt",
-                               "module 19/19.5.5/sector8answer.txt",
-                               "module 19/19.5.5/sector9answer.txt",
-                               "module 19/19.5.5/sector10answer.txt",
-                               "module 19/19.5.5/sector11answer.txt",
-                               "module 19/19.5.5/sector12answer.txt",
-                               "module 19/19.5.5/sector13answer.txt"};
-
-    int audience_score = 0;
-    int player_score = 0;
-    int current = 0;
     cout << "=====================================" << endl;
     cout << "Game What? Where? When?" << endl;
     cout << "=====================================" << endl;
     cout << endl;
+}
+
+void sector_number_selection(int& sector_number)//выбор сектора
+{
+    cout << "Enter sector number " << endl;
+    cout << endl;
+    cin >> sector_number;
+}
+
+bool true_sector(bool* sector)//проверка, играл ли сектор,
+{
+    if (*sector == false)
+    {
+        *sector = true;
+        return true;
+    }
+    
+    return false;
+}
+
+string question_file_selection(int num)
+{
+    string path = "module 19/19.5.5/question_" + to_string(num)+".txt";
+    return path;
+}
+
+string answer_file_selection(int num)
+{
+    string path = "module 19/19.5.5/answer_" + to_string(num)+".txt";
+    return path;
+}
+
+void question_file_read(int num)//открыть файл с вопросом выбранного сектора, вывести на экран
+{
+    cout << "=====================================" << endl;
+    cout << "Question!" << endl;
+    cout << "=====================================" << endl;
+    ifstream question_file;
+    char temp [512];
+    question_file.open(question_file_selection(num), ios::binary);
+    question_file.read(temp, sizeof(temp));
+    for (int i = 0; i < question_file.gcount(); ++i) cout << temp[i];
+    question_file.close();
+    cout << endl;
+}
+
+string answer_file_read(int num)//открыть файл с ответом выбранного сектора
+{
+    cout << "=====================================" << endl;
+    cout << "Answer!" << endl;
+    cout << "=====================================" << endl;
+    string answer_verification;
+    ifstream answer_file;
+    answer_file.open(answer_file_selection(num));
+    answer_file >> answer_verification;
+    answer_file.close();
+
+    return answer_verification;
+}
+
+string accept_the_player_answer()//получить ответ на вопрос
+{
+    string answer;
+    cin >> answer;
+    return answer;
+}
+
+void response_check(string str1, string str2, int& player, int& audience)//проверка на правильность ответа
+{
+    if (str1 == str2)
+    {
+    cout << "=====================================" << endl;
+    cout << "This is the correct answer!" << endl;
+    cout << "=====================================" << endl;
+        ++player;
+    }
+    else
+    {
+    cout << "=====================================" << endl;
+    cout << "This is the incorrect answer!" << endl;
+    cout << "=====================================" << endl;
+        ++audience;
+    }
+    cout << "=====================================" << endl;
+    cout << "Player Score " << player << endl;
+    cout << "Audience Score " << audience << endl;
+    cout << "=====================================" << endl;
+
+}
+
+void is_win(int& player_score, int& audience_score)
+{
+    if (player_score > audience_score) cout << "Player is WIN " << endl;
+    else cout << "Audience is WIN " << endl;
+}
+
+int main()
+{
+    bool sector [14] = {false};
+    int audience_score = 0;
+    int player_score = 0;
+    int sector_number = 0;
+
+    display_title();
+
+
     while (audience_score < 6 && player_score < 6)
     {
-        cout << "Spin the top" << endl;
-        cout << endl;
-        int offset = 0;
-        cin >> offset;
-        current += offset;
-        if (sector[current] == false)
-        {
-            sector[current] = true;
-            cout << "=====================================" << endl;
-            cout << "Attention! Question!" << endl;
-            cout << "=====================================" << endl;
-            ifstream question_file;
-            char temp [512];
-            question_file.open(path_question[current], ios::binary);
-            question_file.read(temp, sizeof(temp));
-            for (int i = 0; i < question_file.gcount(); ++i) cout << temp[i];
-            question_file.close();
-            cout << endl;
+        //выбор сектора, смещение, относительно текщего сектора
+        sector_number_selection(sector_number);
 
-            ifstream answer_file;
-            string answer;
-            string answer_verification;
-            answer_file.open(path_answer[current]);
-            answer_file >> answer_verification;
-            answer_file.close();
-            cout << "=====================================" << endl;
-            cout << "Attention! Answer!" << endl;
-            cout << "=====================================" << endl;
-            cin >> answer;
-            // cout << answer << " " << answer_verification << endl;
-            if (answer == answer_verification)
-            {
-            cout << "=====================================" << endl;
-                cout << "This is the correct answer!" << endl;
-            cout << "=====================================" << endl;
-                ++player_score;
-            }
-            else
-            {
-            cout << "=====================================" << endl;
-                cout << "This is the incorrect answer!" << endl;
-            cout << "=====================================" << endl;
-                ++audience_score;
-            }
-            cout << "=====================================" << endl;
-            cout << "Player Score " << player_score << endl;
-            cout << "Audience Score " << audience_score << endl;
-            cout << "=====================================" << endl;
+        //проверка играл ли сектор.
+        if(true_sector(&sector[sector_number]) && sector_number >= 1 && sector_number <= 13)
+        {
+            //открыть файл с вопросом выбранного сектора, вывести на экран
+            question_file_read(sector_number);
+
+            //проверка на правильность ответа(//получить ответ на вопрос, //открыть файл с ответом выбранного сектора)
+            response_check(accept_the_player_answer(), answer_file_read(sector_number), player_score, audience_score);
+
         }
         else
         {
             cout << "=====================================" << endl;
-            cout << "The dropped sector has already played " << endl;
+            cout << "Select another sector " <<endl;
             cout << "=====================================" << endl;
         }
     }
 
-    if (player_score > audience_score) cout << "Player is WIN " << endl;
-    else cout << "Audience is WIN " << endl;
-    
+    is_win(player_score, audience_score);
+
     return 0;
 }

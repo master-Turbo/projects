@@ -19,28 +19,16 @@ void sector_number_selection(int& sector_number)//выбор сектора
     cin >> sector_number;
 }
 
-bool true_sector(bool* sector)//проверка, играл ли сектор,
+string file_selection(int num, char select)
 {
-    if (*sector == false)
-    {
-        *sector = true;
-        return true;
-    }
+    string path;
+    if (select == 'q') path = "module 19/19.5.5/question_" + to_string(num)+".txt";
+    if (select == 'a') path = "module 19/19.5.5/answer_" + to_string(num)+".txt";
     
-    return false;
-}
-
-string question_file_selection(int num)
-{
-    string path = "module 19/19.5.5/question_" + to_string(num)+".txt";
     return path;
 }
 
-string answer_file_selection(int num)
-{
-    string path = "module 19/19.5.5/answer_" + to_string(num)+".txt";
-    return path;
-}
+
 
 void question_file_read(int num)//открыть файл с вопросом выбранного сектора, вывести на экран
 {
@@ -49,7 +37,7 @@ void question_file_read(int num)//открыть файл с вопросом в
     cout << "=====================================" << endl;
     ifstream question_file;
     char temp [512];
-    question_file.open(question_file_selection(num), ios::binary);
+    question_file.open(file_selection(num, 'q'), ios::binary);
     question_file.read(temp, sizeof(temp));
     for (int i = 0; i < question_file.gcount(); ++i) cout << temp[i];
     question_file.close();
@@ -63,7 +51,7 @@ string answer_file_read(int num)//открыть файл с ответом вы
     cout << "=====================================" << endl;
     string answer_verification;
     ifstream answer_file;
-    answer_file.open(answer_file_selection(num));
+    answer_file.open(file_selection(num, 'a'));
     answer_file >> answer_verification;
     answer_file.close();
 
@@ -121,9 +109,12 @@ int main()
         //выбор сектора, смещение, относительно текщего сектора
         sector_number_selection(sector_number);
 
-        //проверка играл ли сектор.
-        if(true_sector(&sector[sector_number]) && sector_number >= 1 && sector_number <= 13)
+
+        
+        if(!(sector[sector_number]) && sector_number >= 1 && sector_number <= 13)
         {
+            sector[sector_number] = true;
+
             //открыть файл с вопросом выбранного сектора, вывести на экран
             question_file_read(sector_number);
 

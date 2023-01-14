@@ -14,7 +14,7 @@ int main()
     // сoздать файл pic.txt размером height на widht
 
     srand(time(nullptr));
-    ofstream file("pic.txt", ios::binary);
+    ofstream file("pic.txt");
     for (int i = 0; i < height; ++i)
     {
         for (int j = 0; j < width; ++j)
@@ -25,6 +25,6 @@ int main()
         file << endl;
         // cout << endl;
     }
-
+    file.close();
     return 0;
 }

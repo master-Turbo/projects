@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
     char operation;
-    string atm_path = "/home/master-turbo/projects/module 20/20.5.4/bankomat.txt";
+    string atm_path = "bankomat.txt";
     int bills [5] = {100, 200, 500, 1000, 5000};
     int money[1000];
     
@@ -119,6 +119,10 @@ int main()
                             save_state.close();
                             break;
                         }
+            // if (/* condition */)
+            // {
+            //     /* code */
+            // }
                         
                     }
                     

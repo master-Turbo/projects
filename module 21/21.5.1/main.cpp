@@ -22,7 +22,7 @@ int main()
     {
         statement field;
         cout << endl;
-        cout << "Enter command (add or list)" << endl;
+        cout << "Enter command (add, list, exit)" << endl;
         cout << endl;
         cin >> command;
         cout << endl;

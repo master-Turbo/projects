@@ -58,7 +58,7 @@ int main()
             ifstream file(path, ios::app);
             while (!file.eof())
             {
-                file >> buffer;
+                getline(file, buffer);
                 cout << buffer;
             }
             file.close();

@@ -37,6 +37,7 @@ struct buildings
 
 int main()
 {
+    
 
     return 0;
 }

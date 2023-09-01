@@ -28,42 +28,25 @@ int main()
         cout << endl;
         if (command == "add")
         {
-            string temp;
-            int sum = 0;
-            cout << "Name "<< endl;
-            cin >> temp;
-            field.name = temp;
-
-            cout << "Subname " << endl;
-            cin >> temp;
-            field.subname = temp;
-
-            cout << "Date " << endl;
-            cin >> temp;
-            field.date = temp;
-
-            cout << "Summ " << endl;
-            cin >> sum;
-            field.summ = sum;
-            
+            cout << "Name "<< "Subname " << "Date " << "Summ " << endl;
+            cin >> field.name >> field.subname >> field.date >> field.summ;
             ofstream file(path, ios::app);
             file << endl << field.name << " " << field.subname << " "
                  << field.date << " " << field.summ;
             file.close();
-        } //принять данные с клавиатуры и записать в файл
+        } //принять данные с клавиатуры  в структуру и записать в файл
 
         else if (command == "list")
         {
-            string buffer;
-            ifstream file(path, ios::app);
+            // string buffer;
+            ifstream file(path);
             while (!file.eof())
             {
-                getline(file, buffer);
-                cout << buffer;
+                file >> field.name >> field.subname >> field.date >> field.summ;
+                cout << field.name << " " << field.subname << " " << field.date << " " << field.summ << " " << endl;
             }
             file.close();
-            
-        } ////прочитать данные из файла и вывести на экран
+        } ////прочитать данные из файла В СТРУКТУРУ и вывести на экран
 
         else if(command == "exit") return 0;
         else cout << "Incorrect command " << endl;

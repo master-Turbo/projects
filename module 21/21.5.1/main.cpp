@@ -31,8 +31,17 @@ int main()
             cout << "Name "<< "Subname " << "Date " << "Summ " << endl;
             cin >> field.name >> field.subname >> field.date >> field.summ;
             ofstream file(path, ios::app);
-            file << endl << field.name << " " << field.subname << " "
+            if (!file.is_open())
+            {
+                cout << "File open error" << endl;
+            }
+            else
+            {
+                file << endl << field.name << " " << field.subname << " "
                  << field.date << " " << field.summ;
+            }
+            
+
             file.close();
         } //принять данные с клавиатуры  в структуру и записать в файл
 
@@ -40,11 +49,19 @@ int main()
         {
             // string buffer;
             ifstream file(path);
-            while (!file.eof())
+            if (!file.is_open())
             {
-                file >> field.name >> field.subname >> field.date >> field.summ;
-                cout << field.name << " " << field.subname << " " << field.date << " " << field.summ << " " << endl;
+                cout << "File open error" << endl;
             }
+            else
+            {
+                while (!file.eof())
+                {
+                    file >> field.name >> field.subname >> field.date >> field.summ;
+                    cout << field.name << " " << field.subname << " " << field.date << " " << field.summ << " " << endl;
+                }
+            }
+            
             file.close();
         } ////прочитать данные из файла В СТРУКТУРУ и вывести на экран
 

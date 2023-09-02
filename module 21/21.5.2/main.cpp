@@ -1,39 +1,62 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include <vector>
 
 using namespace std;
+
+enum rooms_type
+{
+    bedroom,
+    kitchen,
+    bathroom,
+    children,
+    living
+};
+
+struct room
+{
+    string rooms_type;
+    int room_area;
+};
+
+
+struct floor
+{
+    int floors_number;
+    int ceiling_height;
+    vector<room> rooms; 
+};
+
 
 enum buildings_type
 {
     house,
     garage,
-    barn,
-    bath
-};
-
-enum room_type
-{
-    bedroom,
-    living_room,
-    children_room,
-    kitchen,
-    bathroom
-};
-
-struct place
-{
-    int number = 0;
-    int number_of_buildings = 0;
+    bathroom,
+    barn
 };
 
 struct buildings
 {
-    string building_type = "unknown";
-    int number_of_floors = 0;
-    int number_of_rooms = 0;
-    int square = 0;
+    string buildings_type;
+    vector<floor> floors;
 };
+
+
+struct plot
+{
+    int number;
+    vector<buildings> buildings;
+    double area;
+};
+
+
+struct village
+{
+    vector<plot> plots;
+};
+
 
 int main()
 {

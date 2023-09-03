@@ -5,7 +5,7 @@
 
 using namespace std;
 
-enum rooms_type
+enum room_type
 {
     bedroom,
     kitchen,
@@ -14,12 +14,18 @@ enum rooms_type
     living
 };
 
-struct room
+enum building_type
 {
-    string rooms_type;
-    int room_area;
+    house,
+    garage,
+    barn
 };
 
+struct room
+{
+    string room_type;
+    int room_area;
+};
 
 struct floor
 {
@@ -28,29 +34,18 @@ struct floor
     vector<room> rooms; 
 };
 
-
-enum buildings_type
+struct building
 {
-    house,
-    garage,
-    bathroom,
-    barn
-};
-
-struct buildings
-{
-    string buildings_type;
+    string building_type;
     vector<floor> floors;
 };
-
 
 struct plot
 {
     int number;
-    vector<buildings> buildings;
+    vector<building> buildings;
     double area;
 };
-
 
 struct village
 {
@@ -60,7 +55,8 @@ struct village
 
 int main()
 {
-    
+    cout << "Заполните данные" << endl;
+
 
     return 0;
 }

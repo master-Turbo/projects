@@ -27,9 +27,9 @@ int main()
 
     cout << "character `s name" << endl;
     cin >> new_player.name;
-    cout << "The standard of life of the character" << endl;
+    cout << "the standard of life of the character" << endl;
     cin >> new_player.life;
-    cout << "The level of armor of the character" << endl;
+    cout << "the level of armor of the character" << endl;
     cin >> new_player.armor;
     cout << "the strength of the damage applied by the character" << endl;
     cin >> new_player.damage;

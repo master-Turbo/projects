@@ -1,5 +1,5 @@
 #include <iostream>
-#include <math.h>
+#include <cmath>
 using namespace std;
 
 struct vector
@@ -36,17 +36,21 @@ void length(vector& vec, double& result)
 {
     result = sqrt((vec.x*vec.x) + (vec.y*vec.y));
 }
-void normalize();
+void normalize(vector& vec, double& length, vector& result)
+{
+    result.x = vec.x / length;
+    result.y = vec.y / length;
+}
 
 int main()
 {
-    cout << "введите комманду:" << endl;
+    cout << "enter the command:" << endl;
     cout << endl;
-    cout << "add        сложение двух векторов" << endl;
-    cout << "subtract   вычитание двух векторов" << endl;
-    cout << "scale      умножение вектора на скаляр" << endl;
-    cout << "length     нахождение длины вектора" << endl;
-    cout << "normalize  нормализация вектора." << endl;
+    cout << "add        the addition of two vectors" << endl;
+    cout << "subtract   subtraction of two vectors" << endl;
+    cout << "scale      multiplication of the vector by the scale" << endl;
+    cout << "length     finding the length of the vector" << endl;
+    cout << "normalize  normalization of the vector" << endl;
     cout << endl;
     string operation;
     cin >> operation;
@@ -55,9 +59,9 @@ int main()
         vector new_vector_a;
         vector new_vector_b;
         vector result;
-        cout << "Enter the coordinates vector A"<< endl;
+        cout << "Enter the vector A"<< endl;
         enter_vector(new_vector_a);
-        cout << "Enter the coordinates vector B"<< endl;
+        cout << "Enter the vector B"<< endl;
         enter_vector(new_vector_b);
         print_vector(new_vector_a);
         print_vector(new_vector_b);
@@ -70,9 +74,9 @@ int main()
         vector new_vector_a;
         vector new_vector_b;
         vector result;
-        cout << "Enter the coordinates vector A"<< endl;
+        cout << "Enter the vector A"<< endl;
         enter_vector(new_vector_a);
-        cout << "Enter the coordinates vector B"<< endl;
+        cout << "Enter the vector B"<< endl;
         enter_vector(new_vector_b);
         print_vector(new_vector_a);
         print_vector(new_vector_b);
@@ -85,7 +89,7 @@ int main()
         vector new_vector;
         double scale_num;
         vector result;
-        cout << "enter the coordinates vector" << endl;
+        cout << "enter the vector" << endl;
         enter_vector(new_vector);
         cout << "enter the scale number" << endl;
         cin >> scale_num;
@@ -97,12 +101,23 @@ int main()
     {
         vector new_vector;
         double result;
-        cout << "enter the coordinates vector" << endl;
+        cout << "enter the vector" << endl;
         enter_vector(new_vector);
         length(new_vector, result);
         cout << "vector length"<< endl;
         cout << result << endl;
     }
-    if (operation == "normalize") void normalize();
+    if (operation == "normalize")
+    {
+        vector new_vector;
+        vector result;
+        double len;
+        cout << "enter the vector" << endl;
+        enter_vector(new_vector);
+        length(new_vector, len);
+        normalize(new_vector, len, result);
+        cout << "normalized vector"<< endl;
+        print_vector(result);
+    }
     return 0;
 }

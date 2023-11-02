@@ -26,7 +26,7 @@ int init_game()
 {
     cout << "0 > NEW GAME"<< endl;
     cout << "1 > LOAD GAME" << endl;
-    cout << "2 > SAVE GAME" << endl;
+    // cout << "2 > SAVE GAME" << endl;
 
     int init = -1;
     cin >> init;
@@ -98,15 +98,13 @@ void create_matrix(vector <vector <char>> &game_matrix, const int &width, const 
         }
     }
 
+    //установить игроков по координатам
     game_matrix[player_1.coordinate_x][player_1.coordinate_y] = 'P';
     game_matrix[enemy_1.coordinate_x][enemy_1.coordinate_y] = 'E';
     game_matrix[enemy_2.coordinate_x][enemy_2.coordinate_y] = 'E';
     game_matrix[enemy_3.coordinate_x][enemy_3.coordinate_y] = 'E';
     game_matrix[enemy_4.coordinate_x][enemy_4.coordinate_y] = 'E';
     game_matrix[enemy_5.coordinate_x][enemy_5.coordinate_y] = 'E';
-
-    
-    //установить игроков по координатам
 }
 
 void display_info(player &pl, player &e1, player &e2, player &e3, player &e4, player &e5)
@@ -140,34 +138,47 @@ void display_clear()
     std::cout << "\033[2J\033[1;1H";
 }
 
-void move(vector <vector <char>> &game_matrix)
+void move(player &player_1)
 {
     cout << "your turn" << endl;
-    char command;
-    cin >> command;
-    // ????
+    cout << "L > left\nR > right\nU > up\nD > down" << endl;
+    string command;
+    cin.getline(command);
+
+    if (command == "L" || "l")
+    {
+        player_1.coordinate_x --;
+    }
+    else if (command == "R"|| "r")
+    {
+        player_1.coordinate_x ++;
+    }
+    else if (command == "U" || "u")
+    {
+        player_1.coordinate_y --;
+    }
+    else if (command == "D" || "d")
+    {
+        player_1.coordinate_y ++;
+    }
+    else
+    {
+        cout << "error command" << endl;
+    }
 }
 
 
 int main()
 {
-    // приветствие
     title();
-    // выполнить очистку экрана
-    // std::cout << "\033[2J\033[1;1H";
-    // выбор действия(создать игру или загрузить или сохранить в файл 
-    // (выводится в начале и при паузе (определить символ)))
     if (init_game() == 0)
     {
-        // выполнить очистку экрана
         display_clear();
-        //создание игрока
         player player_1;
         vector <int> cor_x;
         vector <int> cor_y;
         player_1.player_id = 0;
         player_constructor(player_1, cor_x, cor_y);
-        // создание 5 враа движения игроков на игровом полегов
         player enemy_1;
         enemy_constructor(enemy_1, 1, cor_x, cor_y);
         player enemy_2;
@@ -178,39 +189,30 @@ int main()
         enemy_constructor(enemy_4, 4, cor_x, cor_y);
         player enemy_5;
         enemy_constructor(enemy_5, 5, cor_x, cor_y);
-        // очистить временные данные
         cor_x.clear();
         cor_y.clear();
-
-        // выполнить очистку экрана
         display_clear();
-        // создать игровое поле 20*20
         const int width = 20;
         const int height = 20;
         vector <vector <char>> game_matrix (width, vector <char> (height));
-        create_matrix(game_matrix, width, height, player_1,
-                      enemy_1, enemy_2, enemy_3, enemy_4, enemy_5);
-        // нарисовать игровое поле
-        display_matrix(game_matrix, width, height);
-        display_info(player_1, enemy_1, enemy_2, enemy_3, enemy_4, enemy_5);
-        // написать логику движения игроков
-        move(game_matrix);
 
-
-
-
+        while (true)
+        {
+            create_matrix(game_matrix, width, height, player_1, enemy_1, enemy_2, enemy_3, enemy_4, enemy_5);
+            display_matrix(game_matrix, width, height);
+            display_info(player_1, enemy_1, enemy_2, enemy_3, enemy_4, enemy_5);
+            move(player_1);
+            display_clear();
+        }
     }
-    // if (init_game() == 1)
-    // {
-    //     /* code */
-    // }
-    // if (init_game() == 2)
-    // {
-    //     /* code */
-    // }
-    
-    // 
-    // 
+    if (init_game() == 1)
+    {
+        /* code */
+    }
+    if (init_game() == 2)
+    {
+        /* code */
+    }
 
     return 0;
 }
